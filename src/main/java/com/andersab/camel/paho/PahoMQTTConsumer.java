@@ -2,6 +2,7 @@ package com.andersab.camel.paho;
 
 import java.util.Date;
 
+import org.apache.camel.Endpoint;
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
 import org.apache.camel.impl.ScheduledPollConsumer;
@@ -12,10 +13,11 @@ import org.apache.camel.impl.ScheduledPollConsumer;
 public class PahoMQTTConsumer extends ScheduledPollConsumer {
     private final PahoMQTTEndpoint endpoint;
 
-    public PahoMQTTConsumer(PahoMQTTEndpoint endpoint, Processor processor) {
+    public PahoMQTTConsumer(Endpoint endpoint, Processor processor) {
         super(endpoint, processor);
-        this.endpoint = endpoint;
+        this.endpoint = (PahoMQTTEndpoint) endpoint;
     }
+
 
     @Override
     protected int poll() throws Exception {

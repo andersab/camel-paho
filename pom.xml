@@ -16,6 +16,12 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <camel.version>2.13.1</camel.version>
+        <!--<paho.version>0.9.0</paho.version>-->
+        <!--<paho.repo.url>https://repo.eclipse.org/content/repositories/paho-releases</paho.repo.url>-->
+        <!--<paho.artifact.name>org.eclipse.paho.client.mqttv3</paho.artifact.name>-->
+        <paho.repo.url>https://repo.eclipse.org/content/repositories/paho-snapshots/</paho.repo.url>
+        <paho.version>0.4.1-SNAPSHOT</paho.version>
+        <paho.artifact.name>mqtt-client</paho.artifact.name>
     </properties>
 
     <dependencies>
@@ -25,9 +31,15 @@
             <version>${camel.version}</version>
         </dependency>
         <dependency>
+            <groupId>org.apache.camel</groupId>
+            <artifactId>camel-spring</artifactId>
+            <version>${camel.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
             <groupId>org.eclipse.paho</groupId>
-            <artifactId>mqtt-client</artifactId>
-            <version>0.4.1-SNAPSHOT</version>
+            <artifactId>${paho.artifact.name}</artifactId>
+            <version>${paho.version}</version>
         </dependency>
         <!-- logging -->
         <dependency>
@@ -136,7 +148,7 @@
     <repositories>
         <repository>
             <id>Eclipse Paho Repo</id>
-            <url>https://repo.eclipse.org/content/repositories/paho-snapshots/</url>
+            <url>${paho.repo.url}</url>
         </repository>
     </repositories>
 </project>

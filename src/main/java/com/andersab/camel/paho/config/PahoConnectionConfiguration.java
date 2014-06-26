@@ -22,6 +22,38 @@ public class PahoConnectionConfiguration implements Serializable {
         this.connectOptions = new MqttConnectOptions();
     }
 
+    public String getConnectionName() {
+        return connectionName;
+    }
+
+    public void setConnectionName(String connectionName) {
+        this.connectionName = connectionName;
+    }
+
+    public String getBrokerUri() {
+        return brokerUri;
+    }
+
+    public void setBrokerUri(String brokerUri) {
+        this.brokerUri = brokerUri;
+    }
+
+    public String getClientId() {
+        return clientId;
+    }
+
+    public void setClientId(String clientId) {
+        this.clientId = clientId;
+    }
+
+    public MqttClientPersistence getPersistence() {
+        return persistence;
+    }
+
+    public void setPersistence(MqttClientPersistence persistence) {
+        this.persistence = persistence;
+    }
+
     public String getPassword() {
         return String.valueOf(this.connectOptions.getPassword());
     }

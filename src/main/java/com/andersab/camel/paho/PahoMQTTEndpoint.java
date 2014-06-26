@@ -1,42 +1,37 @@
 package com.andersab.camel.paho;
 
-import org.apache.camel.Consumer;
-import org.apache.camel.Processor;
-import org.apache.camel.Producer;
-import org.apache.camel.Service;
+import com.andersab.camel.paho.config.PahoEndpointConfiguration;
+import org.apache.camel.*;
 import org.apache.camel.api.management.ManagedResource;
 import org.apache.camel.impl.DefaultEndpoint;
-import org.apache.camel.spi.HeaderFilterStrategy;
-import org.apache.camel.spi.HeaderFilterStrategyAware;
-import org.apache.camel.spi.UriEndpoint;
-import org.apache.camel.spi.UriPath;
+import org.apache.camel.spi.*;
 
 /**
  * Represents a PahoMQTT endpoint.
  */
 @ManagedResource(description = "Managed Paho Client")
 @UriEndpoint(scheme = "mqtt", consumerClass = PahoMQTTConsumer.class)
-public class PahoMQTTEndpoint extends DefaultEndpoint implements HeaderFilterStrategyAware, Service {
+public class PahoMQTTEndpoint extends DefaultEndpoint implements HeaderFilterStrategyAware, Service, MultipleConsumersSupport {
 
-    @UriPath
     private String connectionName;
 
+    @UriParam
+    private PahoEndpointConfiguration configuration;
 
-    public PahoMQTTEndpoint() {
+    public PahoMQTTEndpoint(String endpointUri, Component component, PahoEndpointConfiguration configuration) {
+        super(endpointUri, component);
+        this.configuration = configuration;
     }
 
-    public PahoMQTTEndpoint(String uri, PahoMQTTComponent component) {
-        super(uri, component);
-    }
-
-    public PahoMQTTEndpoint(String endpointUri) {
-        super(endpointUri);
+    public PahoMQTTEndpoint(PahoEndpointConfiguration configuration) {
+        this.configuration = configuration;
     }
 
     public Producer createProducer() throws Exception {
         return new PahoMQTTProducer(this);
     }
 
+    @Override
     public Consumer createConsumer(Processor processor) throws Exception {
         return new PahoMQTTConsumer(this, processor);
     }
@@ -51,7 +46,16 @@ public class PahoMQTTEndpoint extends DefaultEndpoint implements HeaderFilterStr
     }
 
     @Override
-    public void setHeaderFilterStrategy(HeaderFilterStrategy headerFilterStrategy) {
+    public void setHeaderFilterStrategy(HeaderFilterStrategy strategy) {
         //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    @Override
+    public boolean isMultipleConsumersSupported() {
+        return false;  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    public PahoEndpointConfiguration getConfiguration() {
+        return configuration;
     }
 }
