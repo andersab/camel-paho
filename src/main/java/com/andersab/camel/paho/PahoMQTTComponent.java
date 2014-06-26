@@ -65,7 +65,7 @@ public class PahoMQTTComponent extends UriEndpointComponent implements Applicati
 
     private PahoConnectionConfiguration getConnectionConfiguration() {
 
-// todo         if ()
+
 
         return null;  //To change body of created methods use File | Settings | File Templates.
     }
